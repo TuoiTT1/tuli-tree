@@ -22,13 +22,20 @@
 </template>
 
 <script>
-import sourceData from '@/data.json'
-
+import {mapActions, mapState} from 'vuex'
 export default {
-  data() {
-    return {
-      categories: sourceData.categories
-    }
+  computed: {
+    ...mapState('product', {
+      categories: state => state.categories
+    })
+  },
+  methods: {
+    ...mapActions({
+      fetchData: 'product/fetchCategories'
+    })
+  },
+  created() {
+    this.fetchData()
   }
 }
 </script>

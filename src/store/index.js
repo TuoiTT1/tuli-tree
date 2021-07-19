@@ -1,20 +1,14 @@
 import {createStore} from 'vuex'
 import auth from './module/auth';
+import product from './module/product';
 
 export default createStore({
     modules: {
-      auth
+        auth,
+        product
     },
-    state: {
-
-    },
-    getters: {
-
-    },
-    mutations: {
-
-    },
-    actions: {
-
-    }
+    state: {},
+    getters: {},
+    mutations: {},
+    actions: {}
 })

@@ -9,6 +9,7 @@
 import Header from '@/views/layouts/Header.vue'
 import NavigationBar from '@/views/layouts/NavigationBar.vue'
 import Footer from '@/views/layouts/Footer.vue'
+
 export default {
   name: 'App',
   components: {
@@ -20,5 +21,4 @@ export default {
 </script>
 
 <style>
-
 </style>

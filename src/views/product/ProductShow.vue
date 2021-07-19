@@ -2,7 +2,7 @@
   <div class="mainContent">
     <div class="product_list">
       <product-card
-          v-for="product in products"
+          v-for="product in productsShow"
           :key="product.slug"
           :product="product"
       ></product-card>
@@ -12,14 +12,14 @@
       </button>
       <button class="paging_next" :disabled="!enableNextPage" @click="nextPage"><i class="fa fa-angle-double-right"></i>
       </button>
-      <span>Page {{ currentPage }} / {{ productList.length / pageSize }}</span>
+      <span>Page {{ currentPage }} / {{ products.length / pageSize }}</span>
     </div>
   </div>
 </template>
 
 <script>
-import sourceData from "@/data.json"
 import ProductCard from '@/components/product/ProductCard.vue';
+import {mapActions} from 'vuex'
 
 export default {
   components: {
@@ -28,7 +28,7 @@ export default {
   props: {
     id: {
       type: Number,
-      require: false
+      required: false
     }
   },
   data() {
@@ -38,34 +38,23 @@ export default {
     }
   },
   computed: {
-    products() {
-      return this.productList.filter((row, index) => {
+    products(){
+      this.getProductList(this.id);
+      this.resetCurrentPage();
+      return this.$store.state.product.products;
+    },
+    productsShow() {
+      return this.products.filter((row, index) => {
         const start = (this.currentPage - 1) * this.pageSize
         const end = this.currentPage * this.pageSize
         return index >= start && index < end
       })
     },
-    productList() {
-      if (this.id) {
-        return sourceData.categories.find(
-            (category) => category.id === this.id
-        ).products
-      } else {
-        const categories = sourceData.categories
-        const productsList = []
-        for (let i = 0; i < categories.length; i++) {
-          const pros = categories[i].products
-          for (let j = 0; j < pros.length; j++)
-            productsList.push(pros[j])
-        }
-        return productsList
-      }
-    },
     enablePrePage() {
       return this.currentPage > 1
     },
     enableNextPage() {
-      return this.currentPage * this.pageSize < this.productList.length
+      return this.currentPage * this.pageSize < this.products.length
     }
   },
   methods: {
@@ -74,6 +63,13 @@ export default {
     },
     nextPage() {
       this.currentPage++
+    },
+    ...mapActions('product', {
+      getProductsByCategoryId: 'getProductsByCategoryId',
+      getProductList: 'getProductsByCategoryId'
+    }),
+    resetCurrentPage() {
+      this.currentPage = 1;
     }
   }
 }

@@ -7,6 +7,7 @@
       "description": "Cây cảnh trong nhà là những loại cây cảnh ưa bóng mát, cây có thể sống và phát triển tốt ở điều kiện ít nắng và có điều hòa, chỉ có ánh điện huỳnh quang, việc để cây cảnh trong nhà là việc cần thiết, vì đa số cây sống được tốt ở trong nhà đều có tác dụng hút bụi, lọc không khí, hấp thụ các chất độc hại ở thể hơi, hấp thụ các bức xạ từ thiết bị điện tử phát ra. Hơn thế nữa màu xanh của cây sẽ giúp bạn cảm thấy dễ chịu, đỡ mỏi mắt, giảm stress…Giúp bạn bớt căng thẳng và cảm thấy thoải mái khi trở về ngôi nhà thân yêu của mình.",
       "products": [
         {
+          "id": 1,
           "name": "Cây bình an",
           "slug": "cay-binh-an",
           "image": "cay-binh-an.jpg",
@@ -16,6 +17,7 @@
             " Cây mang ý nghĩa phong thủy mang đến may mắn và bình an trong cuộc sống cho gia chủ, cây có màu lá xanh nổi bật đại diện cho hành mộc nên những gia chủ có hành Mộc và hành Hỏa là cực kỳ phù hợp. Cây Bình An phù hợp làm cây treo, cây để bàn, trang trí quán cà phê, shop…"
         },
         {
+          "id": 2,
           "name": "Cây hạnh phúc to",
           "slug": "cay-hanh-phuc-to",
           "image": "cay-hanh-phuc-to.jpg",
@@ -25,6 +27,7 @@
             "Cây Hạnh Phúc có ý nghĩa phong thủy mang đến hạnh phúc, đầm ấm cho gia chủ. Loại to chiều cao từ 100cm đến 150cm phù hợp làm cây để trang trí không gian shop, cafe, phòng họp, nơi tiếp khách, tặng khai trương, tân gia."
         },
         {
+          "id": 3,
           "name": "Cây vạn lộc thủy sinh",
           "slug": "cay-van-loc-thuy-sinh",
           "image": "cay-van-loc-thuy-sinh.jpg",
@@ -34,6 +37,7 @@
             "Đa phần cây cảnh có màu xanh hoặc màu trắng thuộc màu trung tính và ít sức hút nhưng cây Vạn Lộc thủy sinh lại có màu nóng và cực kỳ nổi bật trong tất cả cây cảnh, xét về cái đẹp và sự đặc sắc thì khó loại cây để bàn nào có thể vượt qua được Vạn Lộc. Cây có thể sống được trong môi trường văn phòng, ánh sáng yếu nên rất phù hợp làm cây cảnh để bàn, cây trang trí nội thất, quán cà phê, quà tặng."
         },
         {
+          "id": 4,
           "name": "Cây hoàng hậu",
           "slug": "cay-hoang-hau",
           "image": "cay-hoang-hau.jpg",
@@ -52,6 +56,7 @@
         "Cây Sen Đá được ước tính có khoảng 60 họ thực vật khác nhau và hơn 3000 loài trên thể giới. Sen Đá sống và phát triển được ở Việt Nam thì chỉ khoảng hơn 300 loại, và hơn 100 loại Sen Đá đẹp trong số đó sức sống tốt, được con người nhân giống và phát triển làm kiểng và làm cây phong thủy.",
       "products": [
         {
+          "id": 5,
           "name": "Sen đá giọt sương",
           "slug": "sen-da-giot-suong",
           "image": "sen-da-giot-suong.jpg",
@@ -61,6 +66,7 @@
             "Cây Sen Đá Giọt Sương là loại cây khá đặc biệt và mới lạ, với hình thù của lá giống với những hạt sương rất căng mọng, cây thuộc loại cây rủ xanh quanh năm. Phù hợp làm cây treo trang trí ban công, cửa sổ, quán cà phê…"
         },
         {
+          "id": 6,
           "name": "Sen đá lá thơm",
           "slug": "sen-da-la-thom",
           "image": "sen-da-la-thom.jpg",
@@ -70,6 +76,7 @@
             "Sen đá Lá Thơm hay còn tên gọi là cây Nhất Mạt Hương  là loại cây có một mùi hương dễ chịu, một mùi hương bạc hà thoang thoảng. Chỉ cần lại gần cây sen này và hít một hơi bạn sẽ thấy dễ chịu và có thể lấy lại hưng phấn làm việc, ngoài ra cây còn có tác dụng đuổi muỗi. Loại cây sen đá Lá Thơm này rất thích hợp để bàn học và bàn làm việc…Cây Nhất Mạt Hương còn được cho là có tác dụng giúp người trồng chi tiêu hợp lý, không mất mát tài chính."
         },
         {
+          "id": 7,
           "name": "Sen đá mặt trăng",
           "slug": "sen-da-mat-trang",
           "image": "sen-da-mat-trang.jpg",
@@ -79,6 +86,7 @@
             "Sen Đá Mặt Trăng có độ dài của cánh, thứ tự các cánh xếp khá giống với Sen Đá Kim là loại sen đá được nhiều người biết đến hơn Sen Đá Mặt Trăng. Cây mang ý nghĩa cho sự minh bạch, rõ rành và công minh. Sen Đá Mặt Trăng phù hợp với người mệnh kim và thổ giúp mang đến tiền tài và danh vọng. Cây phù hợp làm cây để bàn, trang trí quán cà phê, cửa sổ…"
         },
         {
+          "id": 8,
           "name": "Sen đá thược dược",
           "slug": "sen-da-thuoc-duoc",
           "image": "sen-da-thuoc-duoc.jpg",
@@ -97,6 +105,7 @@
         "Xương rồng được biết đến nhiều với hình dáng lạ mắt xù xì và gai góc, và khả năng chịu hạn siêu tốt. Xương rồng lúc ra hoa, quả thật rất đẹp nó như trái ngược hoàn toàn với hình dáng của cây gai góc và xù xì. Cây có tác dụng hút các bức xạ ở máy tính giúp bạn có sức khỏe tốt hơn. Theo tiếng Tây Ban Nha thì xương rồng có nghĩa là hãy đến và mang em đi. ",
       "products": [
         {
+          "id": 9,
           "name": "Xương rồng sinh nhật",
           "slug": "xuong-rong-banh-sinh-nhat",
           "image": "xuong-rong-banh-sinh-nhat.jpg",
@@ -106,6 +115,7 @@
             "Xương rồng bánh sinh nhật có hình tròn, thân có màu xanh được bao quanh bằng một lớp gai tương đối dày. Cây có khả năng ra hoa nhiều có thể lên tới vài chục hoa một lần. Hoa xương rồng bánh sinh nhật thường tồn tại được từ 4 đến 7 ngày. Khi ra hoa nếu để trong môi trường lạnh hoa sẽ bền và lâu tàn hơn."
         },
         {
+          "id": 10,
           "name": "Xương rồng tai thỏ",
           "slug": "xuong-rong-tai-tho",
           "image": "xuong-rong-tai-tho.jpg",
@@ -115,6 +125,7 @@
             "Xương rồng tai thỏ là một trong những loài cây khá phổ biến và được nhiều người biết đến, ngoài tác dụng làm cảnh, nó còn rất nhiều tác dụng khác như làm thuốc, làm thức ăn…Xương rồng tai thỏ có dạng phiến, cây có nhiều gai nhỏ bao phủ, được trồng nhiều ở miền bắc Mexico và tây nam nước Mỹ. Đây là một loại rau xanh quen thuộc của vùng châu Mỹ Latin, đặc biệt là ở Mexico. Cây ra hoa và có quả ngọt giải khát được, mùi vị giống dưa hấu."
         },
         {
+          "id": 11,
           "name": "Xương rồng thanh sơn",
           "slug": "xuong-rong-thanh-son",
           "image": "xuong-rong-thanh-son.jpg",
@@ -124,6 +135,7 @@
             "Xương rồng Thanh Sơn hay còn gọi là xương rồng Ngọn Núi. Những cây xương rồng được biết đến như là có nguồn gốc từ châu Mỹ, nhất là ở những vùng sa mạc. Có lẽ chính vì sức sống mãnh liệt của nó, mà xương rồng Thanh Sơn được nhiều bạn trẻ ưa thích, mua về trang trí bàn học, bàn làm việc, tặng nhau trong các dịp lễ như mong muốn dù có khó khăn thế nào cũng vẫn có thể vượt qua."
         },
         {
+          "id": 12,
           "name": "Xương rồng kim hổ",
           "slug": "xuong-rong-kim-ho",
           "image": "xuong-rong-kim-ho.jpg",
@@ -142,6 +154,7 @@
         "Cây dây leo được nhiều người ưa thích và lựa chọn, vì nó không làm chiếm nhiều diện tích dưới đất mà lại tận dụng được khoảng diện tích trên cao không sử dụng đến, không gian trở nên xanh mà không chật chội. Hơn thế nữa cây dây leo thường là cây có khả năng chịu nắng tốt và ít mất công chăm sóc. Cây thường được trọn làm cây trồng ban công, cây leo giàn, cây trang trí nội thất…",
       "products": [
         {
+          "id": 13,
           "name": "Cây hoa thiên lý",
           "slug": "cay-hoa-thien-ly",
           "image": "cay-hoa-thien-ly.jpg",
@@ -151,6 +164,7 @@
             "Cây Hoa Thiên Lý là dạng cây leo với nhiều tác dụng như: Làm giàn che nắng, làm thuốc chữa bệnh, làm thực phẩm...Cây phù hợp trồng giàn ở sân, cổng, hàng rào, ban công..."
         },
         {
+          "id": 14,
           "name": "Cây thường xuân",
           "slug": "cay-thuong-xuan",
           "image": "cay-thuong-xuan.jpg",
@@ -160,6 +174,7 @@
             "Cây Thường Xuân mang ý nghĩa phong thủy xua đuổi tà ma, xóa tan âm khí, vượng dương khí mang đến bình an và may mắn cho gia chủ. Cây phù hợp để trang trí quán cà phê, nhà hàng, khách sạn, phòng họp..."
         },
         {
+          "id": 15,
           "name": "Cây Hoa Sử Quân Tử",
           "slug": "cay-hoa-su-quan-tu",
           "image": "cay-hoa-su-quan-tu.jpg",
@@ -169,6 +184,7 @@
             "Cây hoa Sử Quân Tử hay còn gọi cây hoa Giun là một trong những loại cây dây leo có hoa phổ biến ở nước ta. Vì cây có sức sống mãnh liệt có hoa thơm nhẹ, ít sâu bệnh và còn được lấy làm thuốc nên hết sức an toàn. Nếu bạn đang muốn tìm loại cây lấy bóng mát và đẹp vào mùa hè, ít phải chăm sóc thì đây là một sự lựa chọn tuyệt vời. Cây hoa Sử Quân Tử phù hợp làm cây ban công, cây leo giàn trước cửa…"
         },
         {
+          "id": 16,
           "name": "Cây Hoa Tigon",
           "slug": "cay-hoa-tigon",
           "image": "cay-hoa-tigon.jpg",
