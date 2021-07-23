@@ -12,14 +12,13 @@
       </button>
       <button class="paging_next" :disabled="!enableNextPage" @click="nextPage"><i class="fa fa-angle-double-right"></i>
       </button>
-      <span>Page {{ currentPage }} / {{ products.length / pageSize }}</span>
+      <span>{{ currentPage }} / {{ products.length / pageSize }}</span>
     </div>
   </div>
 </template>
 
 <script>
 import ProductCard from '@/components/product/ProductCard.vue';
-import {mapActions} from 'vuex'
 
 export default {
   components: {
@@ -37,11 +36,14 @@ export default {
       pageSize: 4,
     }
   },
+  watch: {
+    id() {
+      this.resetCurrentPage();
+    }
+  },
   computed: {
     products(){
-      this.getProductList(this.id);
-      this.resetCurrentPage();
-      return this.$store.state.product.products;
+      return this.$store.getters['product/getProductsByCategoryId'](this.id)
     },
     productsShow() {
       return this.products.filter((row, index) => {
@@ -64,13 +66,9 @@ export default {
     nextPage() {
       this.currentPage++
     },
-    ...mapActions('product', {
-      getProductsByCategoryId: 'getProductsByCategoryId',
-      getProductList: 'getProductsByCategoryId'
-    }),
     resetCurrentPage() {
       this.currentPage = 1;
-    }
+    },
   }
 }
 </script>

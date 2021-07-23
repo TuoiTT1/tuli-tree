@@ -1,4 +1,4 @@
-import sourceData from '@/data.json'
+import axios from 'axios';
 export default {
     namespaced: true,
     state: {
@@ -9,6 +9,18 @@ export default {
         productInStock() {
             return (product) => {
                 return product.inventory > 0
+            }
+        },
+        getProductsByCategoryId(state) {
+            return(id) => {
+                if (id) {
+                    return state.products.filter(
+                        product => product.categoryId === id
+                    )
+                } else {
+                    return state.products.sort(
+                        (pro1,pro2) => (pro1.price > pro2.price) ? 1 : ((pro2.price > pro1.price) ? -1 : 0))
+                }
             }
         }
     },
@@ -21,24 +33,53 @@ export default {
         }
     },
     actions: {
-        fetchCategories({commit}){
-            commit('setCategories', sourceData.categories)
-        },
-        getProductsByCategoryId({state, commit}, id) {
-            let list = []
-            if (id) {
-                list =  state.categories.find(
-                    (category) => category.id === id
-                ).products
-            } else {
-                for (let i = 0; i < state.categories.length; i++) {
-                    const pros = state.categories[i].products
-                    for (let j = 0; j < pros.length; j++)
-                        list.push(pros[j])
-                }
+        async fetchCategories({commit}){
+            try{
+                const result = await axios.get('http://localhost:3001/categories')
+                const categories = result.data
+                console.log("categories: ", categories)
+                commit('setCategories', categories)
+            }catch (error){
+                console.log(error)
             }
-            commit('setProducts', list)
-            return list;
-        }
+        },
+        async fetchProducts({commit}){
+            try{
+                const result = await axios.get('http://localhost:3001/products')
+                const products = result.data
+
+                console.log('products: ', products)
+                commit('setProducts', products)
+            }catch (error) {
+                console.log(error)
+            }
+        },
+
+        // eslint-disable-next-line no-unused-vars
+        // async getProductsByCategoryId({state, commit}, id) {
+        //     let list = []
+        //     console.log('getProductsByCategoryId')
+        //     if (id) {
+        //         try{
+        //             const result = await axios.get(`http://localhost:3001/category/${id}`)
+        //             list = await result.data
+        //             console.log(list)
+        //             commit('setProducts', list)
+        //         }catch (error) {
+        //             console.log(error)
+        //         }
+        //     } else {
+        //         try{
+        //             const result = await axios.get(`http://localhost:3001/products`)
+        //             list = await result.data
+        //             console.log(list)
+        //             commit('setProducts', list)
+        //         }catch (error) {
+        //             console.log(error)
+        //         }
+        //     }
+        //     // commit('setProducts', list)
+        //     // return list;
+        // }
     }
 }

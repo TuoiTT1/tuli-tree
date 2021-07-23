@@ -9,6 +9,7 @@
 import Header from '@/views/layouts/Header.vue'
 import NavigationBar from '@/views/layouts/NavigationBar.vue'
 import Footer from '@/views/layouts/Footer.vue'
+import {mapActions} from 'vuex';
 
 export default {
   name: 'App',
@@ -16,6 +17,16 @@ export default {
     Header,
     NavigationBar,
     Footer
+  },
+  methods: {
+    ...mapActions({
+      fetchCategories: 'product/fetchCategories',
+      fetchProducts: 'product/fetchProducts'
+    })
+  },
+  created() {
+    this.fetchCategories()
+    this.fetchProducts()
   }
 }
 </script>

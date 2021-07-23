@@ -11,13 +11,13 @@ const routes = [
     {
         path: "/category/:id/:slug",
         name: "product_show",
-        component: () => import('@/views/product/ProductShow.vue'),
+        component: () => import('@/views/product/ProductList.vue'),
         props: route => ({...route.params, id: parseInt(route.params.id)}),
     },
     {
         path: "/products",
         name: "product_show_all",
-        component: () => import('@/views/product/ProductShow.vue'),
+        component: () => import('@/views/product/ProductList.vue'),
     },
     {
         path: "/signup",
