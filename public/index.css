@@ -5,6 +5,11 @@
     text-align: center;
     color: #2c3e50;
 }
+a:hover {
+    cursor: pointer;
+    text-decoration: none;
+    color: #358812;
+}
 .header {
     background-color: #f6f6f6;
     width: 100%;
@@ -28,7 +33,7 @@
 .mainContent {
     width: 67%;
     height: 480px;
-    text-align: left;
+    text-align: justify;
     /*font-size: 35px;*/
     /*color: white;*/
     float: right;

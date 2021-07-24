@@ -24,9 +24,9 @@ export default {
       fetchProducts: 'product/fetchProducts'
     })
   },
-  created() {
-    this.fetchCategories()
-    this.fetchProducts()
+  async created() {
+    await this.fetchCategories()
+    await this.fetchProducts()
   }
 }
 </script>

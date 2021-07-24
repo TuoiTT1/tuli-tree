@@ -1,10 +1,10 @@
 <template>
   <div class="product_card">
-    <img :src="`/images/${product.image}`" :alt="product.name">
-    <div class="card_text">
-      <span>{{product.name}}</span><br>
-      <span>{{formatPrice}}</span>
-    </div>
+      <img :src="`/images/${product.image}`" :alt="product.name">
+      <div class="card_text">
+        <span>{{product.name}}</span><br>
+        <span>{{formatPrice}}</span>
+      </div>
   </div>
 </template>
 
@@ -21,7 +21,6 @@ export default {
       return  this.product.price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
     }
   }
-
 }
 </script>
 

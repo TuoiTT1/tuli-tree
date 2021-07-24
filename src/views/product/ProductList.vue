@@ -1,11 +1,14 @@
 <template>
   <div class="mainContent">
     <div class="product_list">
-      <product-card
+      <router-link
           v-for="product in productsShow"
           :key="product.slug"
-          :product="product"
-      ></product-card>
+          :to="{name: 'ProductDetail', params: {productSlug: product.slug}}"
+      >
+        <product-card
+            :product="product"></product-card>
+      </router-link>
     </div>
     <div class="product_paging">
       <button class="paging_pre" :disabled="!enablePrePage" @click="prePage"><i class="fa fa-angle-double-left"></i>
@@ -68,7 +71,7 @@ export default {
     },
     resetCurrentPage() {
       this.currentPage = 1;
-    },
+    }
   }
 }
 </script>
@@ -77,10 +80,6 @@ export default {
 .product_list {
   width: 100%;
   height: 95%;
-}
-
-.product_paging {
-
 }
 
 .paging_pre {

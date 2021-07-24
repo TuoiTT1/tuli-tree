@@ -22,6 +22,13 @@ export default {
                         (pro1,pro2) => (pro1.price > pro2.price) ? 1 : ((pro2.price > pro1.price) ? -1 : 0))
                 }
             }
+        },
+        getProductBySlug(state) {
+            return(slug) => {
+               return state.products.filter(
+                    product => product.slug === slug
+                )[0]
+            }
         }
     },
     mutations: {
@@ -37,7 +44,6 @@ export default {
             try{
                 const result = await axios.get('http://localhost:3001/categories')
                 const categories = result.data
-                console.log("categories: ", categories)
                 commit('setCategories', categories)
             }catch (error){
                 console.log(error)
@@ -47,8 +53,6 @@ export default {
             try{
                 const result = await axios.get('http://localhost:3001/products')
                 const products = result.data
-
-                console.log('products: ', products)
                 commit('setProducts', products)
             }catch (error) {
                 console.log(error)
