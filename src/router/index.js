@@ -70,20 +70,37 @@ const routes = [
         }
     },
     {
-      path: '/cart',
-      name: 'ShoppingCart',
-      component: () => import('@/views/cart/ShoppingCart.vue')
+        path: '/cart',
+        name: 'ShoppingCart',
+        component: () => import('@/views/cart/ShoppingCart.vue'),
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/error',
+        name: 'ErrorPage',
+        component: () => import('@/views/error/ErrorPage.vue')
     },
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
-        component: () => import('@/views/NotFound.vue')
+        component: () => import('@/views/error/NotFound.vue')
     },
 ]
 
 const router =createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
+})
+
+// eslint-disable-next-line no-unused-vars
+router.beforeEach((to, from) => {
+    store.commit('auth/setMsgError', null)
+    if (to.meta.requiresAuth && !store.getters['auth/isAuthenticated']) {
+        //need to login if not already logged in
+        return {name: "login", query: {redirect: to.fullPath}}
+    }
 })
 
 export default router

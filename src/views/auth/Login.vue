@@ -1,6 +1,9 @@
 <template>
   <div class="mainContent">
     <h2>Đăng nhập</h2>
+    <div v-if="msgError" class="alert alert-danger">
+      <strong>{{msgError}}</strong>
+    </div>
     <div class="container">
       <form class="form-horizontal" @submit.prevent="login">
         <div class="form-group">
@@ -47,6 +50,8 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
+
 export default {
   data() {
     return {
@@ -70,7 +75,10 @@ export default {
     formValidity() {
       return this.emailValidity === 'valid'
           && this.passwordValidity === 'valid';
-    }
+    },
+    ...mapState('auth', {
+      msgError: state => state.messageError
+    })
   },
   methods: {
     checkValidity(inputName) {

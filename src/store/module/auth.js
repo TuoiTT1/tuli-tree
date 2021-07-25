@@ -40,53 +40,55 @@ export default {
                 commit('clearUser')
             }, expirationTime * 1000)
         },
-        signup({commit, dispatch}, authData) {
-            axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAq0ridzEIGWwDHF9P6nwa2i94P-VAnBGc', {
-                email: authData.email,
-                password: authData.password,
-                returnSecureToken: true
-            })
-                .then(res => {
-                    commit('authUser', {
-                        idToken: res.data.idToken,
-                        userId: res.data.localId
-                    })
-
-                    dispatch('sendEmailVerification', res.data.idToken)
-
-                    const expirationTime = new Date((new Date()).getTime() + res.data.expiresIn * 1000)
-                    localStorage.setItem('idToken', res.data.idToken)
-                    localStorage.setItem('userId', res.data.localId)
-                    localStorage.setItem('expirationTime', expirationTime)
-
-                    dispatch('storeUser', authData)
-                    dispatch('setLogoutTimer', res.data.expiresIn)
-                    router.replace('/products')
+        async signup({commit, dispatch}, authData) {
+            try {
+                const res = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAq0ridzEIGWwDHF9P6nwa2i94P-VAnBGc', {
+                    email: authData.email,
+                    password: authData.password,
+                    returnSecureToken: true
                 })
-                .catch(error => {
-                    console.log(error.response.data)
-                    if(error.response.data.error.code  === 400 && error.response.data.error.message === 'EMAIL_EXISTS') {
-                        commit('setMsgError', 'Email đã được đăng ký tài khoản.')
-                    }
+                commit('authUser', {
+                    idToken: res.data.idToken,
+                    userId: res.data.localId
                 })
+
+                dispatch('sendEmailVerification', res.data.idToken)
+                const expirationTime = new Date((new Date()).getTime() + res.data.expiresIn * 1000)
+                localStorage.setItem('idToken', res.data.idToken)
+                localStorage.setItem('userId', res.data.localId)
+                localStorage.setItem('expirationTime', expirationTime)
+
+                dispatch('storeUser', authData)
+                dispatch('setLogoutTimer', res.data.expiresIn)
+                commit('auth/setUserId', res.data.localId, {root: true})
+                router.replace('/products')
+            }
+            catch(error) {
+                console.log(error.response.data)
+                if(error.response.data.error.code  === 400 && error.response.data.error.message === 'EMAIL_EXISTS') {
+                    commit('setMsgError', 'Email đã được đăng ký tài khoản.')
+                }
+            }
         },
         // eslint-disable-next-line no-unused-vars
-        sendEmailVerification({commit},idTokenStr) {
-            axios.post('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAq0ridzEIGWwDHF9P6nwa2i94P-VAnBGc', {
-                requestType: 'VERIFY_EMAIL',
-                idToken: idTokenStr
-            }).then (res => {
+        async sendEmailVerification({commit},idTokenStr) {
+            try{
+                const res = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAq0ridzEIGWwDHF9P6nwa2i94P-VAnBGc', {
+                    requestType: 'VERIFY_EMAIL',
+                    idToken: idTokenStr
+                })
                 console.log(res.data)
-            }).catch(err => {
-                console.log(err)
-            })
+            }catch (error){
+                console.log(error)
+            }
         },
-        login({commit, dispatch}, authData) {
-            axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAq0ridzEIGWwDHF9P6nwa2i94P-VAnBGc', {
-                email: authData.email,
-                password: authData.password,
-                returnSecureToken: true
-            }).then(res => {
+        async login({commit, dispatch}, authData) {
+            try{
+                const res = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAq0ridzEIGWwDHF9P6nwa2i94P-VAnBGc', {
+                    email: authData.email,
+                    password: authData.password,
+                    returnSecureToken: true
+                })
                 const userData = {
                     idToken: res.data.idToken,
                     userId: res.data.localId
@@ -96,12 +98,22 @@ export default {
                 localStorage.setItem('userId', res.data.localId)
                 localStorage.setItem('expirationTime', expirationTime)
                 commit('authUser', userData)
+
+                await dispatch('fetchUser')
                 dispatch('setLogoutTimer', res.data.expiresIn)
-                router.replace('/products')
-            })
-                .catch(error => console.log(error))
+                commit('cart/setUserId', res.data.localId, {root: true})
+                await router.replace('/products')
+            }catch (error){
+                console.log(error)
+                if(error.response.data.error.code  === 400 && error.response.data.error.message === 'INVALID_PASSWORD') {
+                    commit('setMsgError', 'Thông tin mật khẩu bị sai.')
+                }
+                if(error.response.data.error.code  === 400 && error.response.data.error.message === 'EMAIL_NOT_FOUND') {
+                    commit('setMsgError', 'Email chưa được đăng ký tài khoản.')
+                }
+            }
         },
-        tryToLogin({commit}) {
+        tryToLogin({commit, dispatch}) {
             const idToken = localStorage.getItem('idToken');
             if (!idToken) {
                 return;
@@ -115,34 +127,41 @@ export default {
                 idToken: idToken,
                 userId: expirationTime
             })
+            dispatch('fetchUser')
+
+            const userId = localStorage.getItem('userId')
+            commit('cart/setUserId', userId, {root: true})
         },
-        storeUser({commit, state}, userData) {
+        async storeUser({commit, state}, userData) {
             if (!state.idToken) {
                 return
             }
-            axios.post('https://tuli-trees-store-default-rtdb.firebaseio.com/user.json?auth=' + state.idToken, userData)
-                .then(res => {
-                    console.log(res)
-                    commit('storeUser', userData)
-                })
-                .catch(error => console.log(error))
+            try{
+                const res = await axios.post('https://tuli-trees-store-default-rtdb.firebaseio.com/user.json?auth=' + state.idToken, userData)
+                console.log(res)
+                commit('storeUser', userData)
+            }catch (error) {
+                console.log(error)
+            }
+
         },
-        fetchUser({commit, state}) {
+        async fetchUser({commit, state}) {
             if (!state.idToken) {
                 return
             }
-            axios.get('https://tuli-trees-store-default-rtdb.firebaseio.com/user.json?auth=' + state.idToken)
-                .then(res => {
-                    const data = res.data
-                    const users = []
-                    for (let key in data) {
-                        const user = data[key]
-                        user.id = key
-                        users.push(user)
-                    }
-                    commit('storeUser', users[0])
-                })
-                .catch(error => console.log(error))
+            try{
+                const res = await axios.get('https://tuli-trees-store-default-rtdb.firebaseio.com/user.json?auth=' + state.idToken)
+                const data = res.data
+                const users = []
+                for (let key in data) {
+                    const user = data[key]
+                    user.id = key
+                    users.push(user)
+                }
+                commit('storeUser', users[0])
+            }catch (error) {
+                console.log(error)
+            }
         },
         logout({commit, getters}) {
             if (getters.isAuthenticated) {

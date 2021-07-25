@@ -8,7 +8,10 @@
       <div class="user_info">
         <router-link v-if="!auth" :to="{name: 'signup'}" > Đăng ký |</router-link>
         <router-link v-if="!auth" :to="{name: 'login'}" > Đăng nhập |</router-link>
-        <a v-if="auth" @click="logout" > Đăng xuất</a>
+        <div v-if="auth">
+          {{user ? user.fullName : ""}} &nbsp;&nbsp;
+          <a @click="logoutAcc" > Đăng xuất</a>
+        </div>
       </div>
     </div>
     <div class="header_main">
@@ -43,13 +46,18 @@ export default {
       totalItemsInCart: 'totalItemsInCart'
     }),
     ...mapGetters('auth', {
-      auth: 'isAuthenticated'
+      auth: 'isAuthenticated',
+      user: 'user'
     }),
   },
   methods: {
     ...mapActions('auth', {
       logout: 'logout'
-    })
+    }),
+    logoutAcc(){
+      this.logout()
+      this.$store.commit('cart/emptyCart')
+    }
   }
 }
 </script>

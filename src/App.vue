@@ -21,12 +21,14 @@ export default {
   methods: {
     ...mapActions({
       fetchCategories: 'product/fetchCategories',
-      fetchProducts: 'product/fetchProducts'
+      fetchProducts: 'product/fetchProducts',
+      tryAutoLogin: 'auth/tryToLogin'
     })
   },
   async created() {
     await this.fetchCategories()
     await this.fetchProducts()
+    await this.tryAutoLogin()
   }
 }
 </script>

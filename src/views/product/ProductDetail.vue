@@ -1,4 +1,14 @@
 <template>
+  <base-dialog v-if="isOpenNotify" title="Thông báo">
+    <template #default>
+      <h4>Bạn phải <router-link :to="{name: 'login'}">Đăng nhập</router-link> trước.</h4>
+      <h4>Hoặc <router-link :to="{name: 'signup'}">Đăng ký</router-link> tài khoản mới.</h4>
+    </template>
+    <template #actions>
+      <button type="button" class="btn btn-primary" @click="closeNotify">OK</button>
+    </template>
+  </base-dialog>
+
   <div class="mainContent">
     <h1><i class="fa fa-arrow-left" @click="$router.back()"></i></h1>
     <div class="container">
@@ -41,12 +51,20 @@
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex'
-
+import BaseDialog from '@/components/UI/BaseDialog';
 export default {
+  components: {
+    BaseDialog
+  },
   props: {
     productSlug: {
       type: String,
       required: true
+    }
+  },
+  data() {
+    return {
+      isOpenNotify: false
     }
   },
   computed: {
@@ -63,12 +81,26 @@ export default {
     },
     ...mapGetters('product', {
       productInStock: 'productInStock'
-    })
+    }),
+    ...mapGetters('auth', {
+      auth: 'isAuthenticated'
+    }),
   },
   methods: {
     ...mapActions('cart', {
-      addToCart: 'addProductToCart'
-    })
+      addProductToCart: 'addProductToCart'
+    }),
+    addToCart(product) {
+      if(!this.auth){
+        this.isOpenNotify = true
+      }
+      else{
+        this.addProductToCart(product)
+      }
+    },
+    closeNotify() {
+      this.isOpenNotify = false
+    }
   }
 }
 </script>
