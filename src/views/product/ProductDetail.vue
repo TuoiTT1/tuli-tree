@@ -1,6 +1,6 @@
 <template>
   <div class="mainContent">
-    <h1></h1>
+    <h1><i class="fa fa-arrow-left" @click="$router.back()"></i></h1>
     <div class="container">
       <div class="row">
         <div class="pb-left-column col-xs-12 col-sm-4 col-md-5">
@@ -14,47 +14,33 @@
           <p>{{ product.description }}</p>
         </div>
         <div class="pb-right-column col-xs-12 col-sm-4 col-md-3">
-          <form>
-            <div class="box-info-product">
-              <div class="content_prices clearfix">
-                <h4>{{ productInStock(product) ? "Còn hàng" : "Hết hàng" }}</h4>
-                <div class="price">
-                  <h2>{{ formatPrice }}</h2>
-                </div>
+          <div class="box-info-product">
+            <div class="content_prices clearfix">
+              <h4>{{ productInStock(product) ? "Còn hàng" : "Hết hàng" }} ({{ product.inventory }})</h4>
+              <div class="price">
+                <h2>{{ formatPrice }}</h2>
               </div>
-              <div class="product_attributes clearfix">
-                <label>Số lượng </label>
-                <div class="input-group">
-                <span class="input-group-btn">
-                    <button class="btn btn-danger btn-number" data-type="minus" type="button">
-                      <span><i class="fa fa-minus"></i></span>
-                    </button>
-                </span>
-                  <input id="quantity_wanted" class="text" name="qty" type="text" value="1">
-                  <span class="input-group-btn">
-                    <button class="btn btn-success btn-number" data-type="plus" type="button">
-                        <span><i class="fa fa-plus"></i></span>
-                    </button>
-                </span>
-                </div>
-                <div class="box-cart-bottom">
-                  <div class="buttons_bottom_block">
-                    <button class="exclusive" name="Submit" type="submit">
-                      <span><i class="fa fa-shopping-cart"></i></span>
-                      <span>Add to cart</span>
-                    </button>
-                  </div>
+            </div>
+            <div class="product_attributes clearfix">
+              <div class="box-cart-bottom">
+                <div class="buttons_bottom_block">
+                  <button :disabled="!productInStock(product)"
+                          class="exclusive"
+                          @click="addToCart(product)"
+                  >
+                    <span>Thêm vào giỏ <span><i class="fa fa-shopping-cart"></i></span></span>
+                  </button>
                 </div>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import {mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   props: {
@@ -78,6 +64,11 @@ export default {
     ...mapGetters('product', {
       productInStock: 'productInStock'
     })
+  },
+  methods: {
+    ...mapActions('cart', {
+      addToCart: 'addProductToCart'
+    })
   }
 }
 </script>
@@ -86,6 +77,16 @@ export default {
 a [class^="icon-"], a [class*=" icon-"] {
   display: inline;
 }
+
+p {
+  text-align: justify;
+}
+
+h1 {
+  text-align: left;
+  color: #28a745;
+}
+
 .image-block {
   position: relative;
   display: block;
@@ -122,25 +123,6 @@ a [class^="icon-"], a [class*=" icon-"] {
 
 .product_attributes {
   padding: 19px 19px 17px;
-}
-
-.product_attributes label {
-  display: block;
-  margin-bottom: 7px;
-}
-
-.product_attributes input {
-  width: 50px;
-  padding: 0 6px;
-  float: left;
-  border: 1px solid #d6d4d4;
-  line-height: 27px;
-  margin-left: 3px;
-}
-
-.product_attributes .btn {
-  float: left;
-  margin-left: 3px;
 }
 
 .box-cart-bottom {

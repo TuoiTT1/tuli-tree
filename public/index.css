@@ -32,8 +32,8 @@ a:hover {
 
 .mainContent {
     width: 67%;
-    height: 480px;
-    text-align: justify;
+    height: auto;
+    text-align: center;
     /*font-size: 35px;*/
     /*color: white;*/
     float: right;

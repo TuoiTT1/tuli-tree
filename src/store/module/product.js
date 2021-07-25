@@ -29,6 +29,13 @@ export default {
                     product => product.slug === slug
                 )[0]
             }
+        },
+        getProductById(state) {
+            return(id) => {
+                return state.products.filter(
+                    product => product.id === id
+                )[0]
+            }
         }
     },
     mutations: {
@@ -37,7 +44,13 @@ export default {
         },
         setProducts(state, products){
             state.products = products
-        }
+        },
+        decrementProductInventory(state, product) {
+            product.inventory--;
+        },
+        incrementProductInventory(state, {product, qty}) {
+            product.inventory = product.inventory + qty;
+        },
     },
     actions: {
         async fetchCategories({commit}){

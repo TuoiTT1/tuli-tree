@@ -10,6 +10,16 @@ const routes = [
         component: Dashboard
     },
     {
+        path: "/signup",
+        name: "signup",
+        component: () => import('@/views/auth/Signup.vue')
+    },
+    {
+        path: "/login",
+        name: "login",
+        component: () => import('@/views/auth/Login.vue')
+    },
+    {
         path: "/category/:id/:slug",
         name: "product_show",
         component: () => import('@/views/product/ProductList.vue'),
@@ -60,14 +70,9 @@ const routes = [
         }
     },
     {
-        path: "/signup",
-        name: "signup",
-        component: () => import('@/views/auth/Signup.vue')
-    },
-    {
-        path: "/login",
-        name: "login",
-        component: () => import('@/views/auth/Login.vue')
+      path: '/cart',
+      name: 'ShoppingCart',
+      component: () => import('@/views/cart/ShoppingCart.vue')
     },
     {
         path: '/:pathMatch(.*)*',

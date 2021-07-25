@@ -86,7 +86,7 @@ export default {
 <style>
 .banner {
   width: 90%;
-  height: 90%;
+  height: 400px;
 }
 
 .arrow_lef, .arrow_right {

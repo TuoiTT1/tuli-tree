@@ -25,8 +25,10 @@
       </div>
       <div id="shopping_cart">
         <div class="icon_shopping_cart">
-          <img class="icon_cart" src="../../../public/images/shopping_cart_icon.png"/>
-          <b>(Empty)</b>
+          <router-link :to="{name: 'ShoppingCart'}">
+            <img class="icon_cart" src="../../../public/images/shopping_cart_icon.png"/>
+          </router-link>
+          <b>({{ totalItemsInCart }})</b>
         </div>
       </div>
     </div>
@@ -37,6 +39,9 @@
 import {mapGetters, mapActions} from 'vuex'
 export default {
   computed: {
+    ...mapGetters('cart', {
+      totalItemsInCart: 'totalItemsInCart'
+    }),
     ...mapGetters('auth', {
       auth: 'isAuthenticated'
     }),

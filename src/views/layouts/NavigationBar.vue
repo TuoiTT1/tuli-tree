@@ -2,7 +2,7 @@
   <div class="nav">
     <span><b>Danh mục sản phẩm</b></span>
     <ul>
-      <li>
+      <li v-if="categories.length > 0">
         <router-link :to="{name: 'product_show_all'}">
           <i class="fa fa-leaf"></i> Các loại cây
         </router-link>
