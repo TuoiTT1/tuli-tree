@@ -2,7 +2,7 @@
   <div class="mainContent">
     <h2>Đăng nhập</h2>
     <div v-if="msgError" class="alert alert-danger">
-      <strong>{{msgError}}</strong>
+      <strong>{{ msgError }}</strong>
     </div>
     <div class="container">
       <form class="form-horizontal" @submit.prevent="login">
@@ -12,13 +12,13 @@
               <label class="control-label" for="email">Email:</label>
             </div>
             <div class="col-sm-4">
-              <input class="form-control" id="email" type="email" v-model="email"/>
+              <input id="email" v-model="email" class="form-control" type="email"/>
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-if="emailValidity === 'invalid'">Không được để trống.
+            <div v-if="emailValidity === 'invalid'"
+                 class="col-sm-4 invalid-feedback">Không được để trống.
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-if="emailValidity === 'invalidEmail'">Email không hợp lệ.
+            <div v-if="emailValidity === 'invalidEmail'"
+                 class="col-sm-4 invalid-feedback">Email không hợp lệ.
             </div>
           </div>
         </div>
@@ -28,10 +28,10 @@
               <label class="control-label" for="password">Mật khẩu:</label>
             </div>
             <div class="col-sm-4">
-              <input class="form-control" id="password" type="password" v-model="password"/>
+              <input id="password" v-model="password" class="form-control" type="password"/>
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-if="passwordValidity === 'invalid'">Không được để trống.
+            <div v-if="passwordValidity === 'invalid'"
+                 class="col-sm-4 invalid-feedback">Không được để trống.
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@
             <div class="col-sm-3">
             </div>
             <div class="col-sm-4">
-              <button class="btn btn-primary" :disabled="!formValidity">Đăng nhập</button>
+              <button :disabled="!formValidity" class="btn btn-primary">Đăng nhập</button>
             </div>
           </div>
         </div>
@@ -107,6 +107,7 @@ form {
   padding-left: 100px;
   padding-top: 80px;
 }
+
 h2 {
 
   padding-top: 30px;

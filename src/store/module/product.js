@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 export default {
     namespaced: true,
     state: {
@@ -12,26 +13,26 @@ export default {
             }
         },
         getProductsByCategoryId(state) {
-            return(id) => {
+            return (id) => {
                 if (id) {
                     return state.products.filter(
                         product => product.categoryId === id
                     )
                 } else {
                     return state.products.sort(
-                        (pro1,pro2) => (pro1.price > pro2.price) ? 1 : ((pro2.price > pro1.price) ? -1 : 0))
+                        (pro1, pro2) => (pro1.price > pro2.price) ? 1 : ((pro2.price > pro1.price) ? -1 : 0))
                 }
             }
         },
         getProductBySlug(state) {
-            return(slug) => {
-               return state.products.filter(
+            return (slug) => {
+                return state.products.filter(
                     product => product.slug === slug
                 )[0]
             }
         },
         getProductById(state) {
-            return(id) => {
+            return (id) => {
                 return state.products.filter(
                     product => product.id === id
                 )[0]
@@ -39,10 +40,10 @@ export default {
         }
     },
     mutations: {
-        setCategories(state, categories){
+        setCategories(state, categories) {
             state.categories = categories
         },
-        setProducts(state, products){
+        setProducts(state, products) {
             state.products = products
         },
         decrementProductInventory(state, product) {
@@ -53,21 +54,21 @@ export default {
         },
     },
     actions: {
-        async fetchCategories({commit}){
-            try{
+        async fetchCategories({commit}) {
+            try {
                 const result = await axios.get('http://localhost:3001/categories')
                 const categories = result.data
                 commit('setCategories', categories)
-            }catch (error){
+            } catch (error) {
                 console.log(error)
             }
         },
-        async fetchProducts({commit}){
-            try{
+        async fetchProducts({commit}) {
+            try {
                 const result = await axios.get('http://localhost:3001/products')
                 const products = result.data
                 commit('setProducts', products)
-            }catch (error) {
+            } catch (error) {
                 console.log(error)
             }
         },

@@ -1,13 +1,12 @@
 import {createRouter, createWebHistory} from "vue-router";
-import Dashboard from '../components/dasboard/Dashboard.vue';
 
 import store from '@/store/index'
 
 const routes = [
     {
-        path:"/",
-        name:"Dashboard",
-        component: Dashboard
+        path: "/",
+        name: "Dashboard",
+        component: () => import('@/components/dashboard/Dashboard.vue')
     },
     {
         path: "/signup",
@@ -26,16 +25,15 @@ const routes = [
         props: route => ({...route.params, id: parseInt(route.params.id)}),
         // eslint-disable-next-line no-unused-vars
         async beforeEnter(to, from) {
-            if(store.state.product.categories.length === 0) {
+            if (store.state.product.categories.length === 0) {
                 await store.dispatch('product/fetchCategories')
             }
-            let dataExist =  store.state.product.categories.find(
+            let dataExist = store.state.product.categories.find(
                 (category) => category.id === parseInt(to.params.id)
                     && category.slug === to.params.slug
             )
             if (!dataExist) return {
                 name: "NotFound",
-                //allows keeping the URL while rendering the different page
                 params: {pathMatch: to.path.split("/").slice(1)},
                 query: to.query,
                 hash: to.hash
@@ -54,7 +52,7 @@ const routes = [
         props: true,
         // eslint-disable-next-line no-unused-vars
         async beforeEnter(to, from) {
-            if(store.state.product.products.length === 0){
+            if (store.state.product.products.length === 0) {
                 await store.dispatch('product/fetchProducts')
             }
             const dataExist = store.state.product.products.find(
@@ -62,7 +60,6 @@ const routes = [
             )
             if (!dataExist) return {
                 name: "NotFound",
-                //allows keeping the URL while rendering the different page
                 params: {pathMatch: to.path.split("/").slice(1)},
                 query: to.query,
                 hash: to.hash
@@ -89,7 +86,7 @@ const routes = [
     },
 ]
 
-const router =createRouter({
+const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
 })

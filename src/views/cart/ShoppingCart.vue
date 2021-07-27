@@ -34,15 +34,15 @@
         </tr>
         </tfoot>
       </table>
-      <div class="cart_navigation clearfix" v-if="totalItemsInCart > 0">
-        <router-link class="continue_shopping" :to="{name: 'product_show_all'}">
+      <div v-if="totalItemsInCart > 0" class="cart_navigation clearfix">
+        <router-link :to="{name: 'product_show_all'}" class="continue_shopping">
           <span><i class='fa fa-angle-left'></i> Tiếp tục chọn cây</span>
         </router-link>
-        <router-link :to="{name: 'product_show_all'}">
-          <div class="checkout" >
+        <a href="#" @click="checkout">
+          <div class="checkout">
             <span>Mua hàng <i class='fa fa-angle-right'></i></span>
           </div>
-        </router-link>
+        </a>
       </div>
     </div>
   </div>
@@ -67,14 +67,17 @@ export default {
     formatPrice(price) {
       return price ? price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}) : "";
     },
-    decrementQty(cartItem){
+    decrementQty(cartItem) {
       this.$store.dispatch('cart/decrementItemQuantity', cartItem)
     },
+    checkout() {
+      this.$store.dispatch('cart/checkout')
+    }
   }
 }
 </script>
 <style scoped>
-.cart_navigation{
+.cart_navigation {
   text-align: left;
   font-size: 25px;
 }

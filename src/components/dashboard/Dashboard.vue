@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Slide from './Slide.vue';
+import Slide from '@/components/dashboard/Slide.vue';
 
 export default {
   components: {
@@ -121,7 +121,7 @@ export default {
 }
 
 .circles div:active,
-.circles div:hover{
+.circles div:hover {
   background-color: greenyellow;
 }
 </style>

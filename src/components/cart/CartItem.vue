@@ -4,9 +4,9 @@
       <h4>Bạn có chắc chắn muốn loại bỏ sản phẩm "<b>{{ cartItem.title }}"</b> trong giỏ hàng không?</h4>
     </template>
     <template #actions>
-      <button type="button" class="btn btn-primary" @click="deleteItem(cartItem)">Có</button>
+      <button class="btn btn-primary" type="button" @click="deleteItem(cartItem)">Có</button>
       &nbsp; &nbsp;
-      <button type="button" class="btn btn-warning" @click="notDelete">Không</button>
+      <button class="btn btn-warning" type="button" @click="notDelete">Không</button>
     </template>
   </base-dialog>
 
@@ -14,7 +14,7 @@
     <router-link
         :to="{name: 'ProductDetail', params: {productSlug: cartItem.slug}}"
     >
-      <img :src="imgUrl(cartItem.image)" :alt="cartItem.title">
+      <img :alt="cartItem.title" :src="imgUrl(cartItem.image)">
     </router-link>
   </td>
   <td class="cart_item_title">{{ cartItem.title }}</td>
@@ -22,17 +22,17 @@
   <td class="cart_item_qty">
     <div class="input-group">
         <span class="input-group-btn">
-            <button class="btn btn-danger btn-number" data-type="minus" type="button"
-                    :disabled="cartItem.quantity === 1"
+            <button :disabled="cartItem.quantity === 1" class="btn btn-danger btn-number" data-type="minus"
+                    type="button"
                     @click="decrementQty(cartItem)"
             >
               <span><i class="fa fa-minus"></i></span>
             </button>
         </span>
-      <input class="text" name="qty" type="text" :value="cartItem.quantity" disabled="true">
+      <input :value="cartItem.quantity" class="text" disabled="true" name="qty" type="text">
       <span class="input-group-btn">
-            <button class="btn btn-success btn-number" data-type="plus" type="button"
-                    :disabled="!productInStock"
+            <button :disabled="!productInStock" class="btn btn-success btn-number" data-type="plus"
+                    type="button"
                     @click="incrementQty(cartItem)"
             >
                 <span><i class="fa fa-plus"></i></span>
@@ -46,14 +46,14 @@
   </td>
 </template>
 <script>
-import BaseDialog from '../UI/BaseDialog';
+import BaseDialog from '@/components/UI/BaseDialog.vue';
 
 export default {
   components: {
     BaseDialog
   },
   props: [
-      'cartItem'
+    'cartItem'
   ],
   data() {
     return {
@@ -81,7 +81,7 @@ export default {
     decrementQty(item) {
       this.$store.dispatch('cart/decrementQty', item)
     },
-    openConfirmDelete(){
+    openConfirmDelete() {
       this.isOpenConfirmDelete = true
     },
     notDelete() {
@@ -105,30 +105,36 @@ input {
   margin-left: 3px;
   margin-right: 3px;
 }
+
 .cart_item_img {
   width: 150px;
 }
-.cart_item_img img{
+
+.cart_item_img img {
   max-width: 100px;
   max-height: 100px;
   width: 100%;
   height: 100%;
 }
+
 .cart_item_title {
   text-align: left;
   width: 220px;
   vertical-align: middle;
 }
+
 .cart_item_price {
   text-align: right;
   width: 110px;
   vertical-align: middle;
 
 }
+
 .cart_item_qty {
   width: 150px;
   vertical-align: middle;
 }
+
 .cart_item_delete {
   vertical-align: middle;
   font-size: 23px;

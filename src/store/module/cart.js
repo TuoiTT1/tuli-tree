@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
     namespaced: true,
     state: {
@@ -27,7 +29,45 @@ export default {
         totalItemsInCart(state) {
             return state.items.length
         }
-
+    },
+    mutations: {
+        setUserId(state, userId) {
+            state.userId = userId
+        },
+        pushProductToCart(state, productId) {
+            state.items.push(
+                {
+                    id: productId,
+                    quantity: 1
+                }
+            )
+        },
+        removeProductFromCart(state, cartItem) {
+            const findIdx = state.items.indexOf(cartItem)
+            state.items.splice(findIdx, 1)
+        },
+        incrementItemQuantity(state, cartitem) {
+            cartitem.quantity++;
+        },
+        decrementItemQuantity(state, cartitem) {
+            cartitem.quantity--;
+        },
+        emptyCart(state) {
+            state.items = []
+            state.userId = null
+            state.cartHistory = []
+            state.checkoutStatus = null
+        },
+        setCheckoutStatus(state, status) {
+            state.checkoutStatus = status
+        },
+        pushHistory(state, historyItem) {
+            state.cartHistory.push({
+                productId: historyItem.productId,
+                action: historyItem.action,
+                quantity: historyItem.quantity
+            })
+        }
     },
     actions: {
         addProductToCart({state, commit, rootGetters}, product) {
@@ -99,53 +139,23 @@ export default {
                 commit('product/incrementProductInventory', {product: product, qty: cartItem.quantity}, {root: true})
             }
         },
-        checkout({commit}, checkBuy) {
-            if (checkBuy) {
+        async checkout({state, commit, rootGetters}) {
+            //save cart to db
+            try {
+                const idToken = rootGetters['auth/idToken']
+                const res = await axios.post('https://tuli-trees-store-default-rtdb.firebaseio.com/cart.json?auth=' + idToken,
+                    {
+                        userId: state.userId,
+                        items: state.items,
+                        cartHistory: state.cartHistory
+                    })
+                console.log(res.data)
                 commit('emptyCart')
-                commit('setCheckoutStatus', 'success')
-            } else {
+                // commit('setCheckoutStatus', 'success')
+            } catch (error) {
+                console.log(error)
                 commit('setCheckoutStatus', 'fail')
             }
         }
-    },
-    mutations: {
-        setUserId(state, userId) {
-            state.userId = userId
-        },
-        pushProductToCart(state, productId) {
-            state.items.push(
-                {
-                    id: productId,
-                    quantity: 1
-                }
-            )
-        },
-        removeProductFromCart(state, cartItem) {
-            const findIdx = state.items.indexOf(cartItem)
-            state.items.splice(findIdx, 1)
-        },
-        incrementItemQuantity(state, cartitem) {
-            cartitem.quantity++;
-        },
-        decrementItemQuantity(state, cartitem) {
-            cartitem.quantity--;
-        },
-        emptyCart(state) {
-            state.items = []
-            state.userId = null
-            state.cartHistory = []
-            state.checkoutStatus = null
-        },
-        setCheckoutStatus(state, status) {
-            state.checkoutStatus = status
-        },
-        pushHistory(state, historyItem) {
-            state.cartHistory.push({
-                productId: historyItem.productId,
-                action: historyItem.action,
-                quantity: historyItem.quantity
-            })
-        }
     }
-
 }

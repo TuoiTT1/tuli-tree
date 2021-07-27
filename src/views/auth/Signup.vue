@@ -2,7 +2,7 @@
   <div class="mainContent">
     <h2>Đăng ký tài khoản</h2>
     <div v-if="msgError" class="alert alert-danger">
-      <strong>{{msgError}}</strong>
+      <strong>{{ msgError }}</strong>
     </div>
     <div class="container">
       <form class="form-horizontal" @submit.prevent="signup">
@@ -12,10 +12,10 @@
               <label class="control-label" for="name">Họ tên:</label>
             </div>
             <div class="col-sm-4">
-              <input class="form-control" id="name" type="text" v-model="fullName"/>
+              <input id="name" v-model="fullName" class="form-control" type="text"/>
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-if="fullNameValidity === 'invalid'">Không được bỏ trống.
+            <div v-if="fullNameValidity === 'invalid'"
+                 class="col-sm-4 invalid-feedback">Không được bỏ trống.
             </div>
           </div>
         </div>
@@ -25,13 +25,13 @@
               <label class="control-label" for="email">Email:</label>
             </div>
             <div class="col-sm-4">
-              <input class="form-control" id="email" type="email" v-model="email"/>
+              <input id="email" v-model="email" class="form-control" type="email"/>
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-if="emailValidity === 'invalid'">Không được để trống.
+            <div v-if="emailValidity === 'invalid'"
+                 class="col-sm-4 invalid-feedback">Không được để trống.
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-if="emailValidity === 'invalidEmail'">Email không hợp lệ.
+            <div v-if="emailValidity === 'invalidEmail'"
+                 class="col-sm-4 invalid-feedback">Email không hợp lệ.
             </div>
           </div>
         </div>
@@ -41,10 +41,10 @@
               <label class="control-label" for="phone">Số điện thoại:</label>
             </div>
             <div class="col-sm-4">
-              <input class="form-control" id="phone" type="text" v-model="phone"/>
+              <input id="phone" v-model="phone" class="form-control" type="text"/>
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-if="phoneValidity === 'invalid'">Không được để trống.
+            <div v-if="phoneValidity === 'invalid'"
+                 class="col-sm-4 invalid-feedback">Không được để trống.
             </div>
           </div>
         </div>
@@ -54,10 +54,10 @@
               <label class="control-label" for="userName">Tên tài khoản:</label>
             </div>
             <div class="col-sm-4">
-              <input class="form-control" id="userName" type="text" v-model="userName"/>
+              <input id="userName" v-model="userName" class="form-control" type="text"/>
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-if="userNameValidity === 'invalid'">Không được để trống.
+            <div v-if="userNameValidity === 'invalid'"
+                 class="col-sm-4 invalid-feedback">Không được để trống.
             </div>
           </div>
         </div>
@@ -67,13 +67,13 @@
               <label class="control-label" for="password">Mật khẩu:</label>
             </div>
             <div class="col-sm-4">
-              <input class="form-control" id="password" type="password" v-model="password"/>
+              <input id="password" v-model="password" class="form-control" type="password"/>
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-if="passwordValidity === 'invalid'">Không được để trống.
+            <div v-if="passwordValidity === 'invalid'"
+                 class="col-sm-4 invalid-feedback">Không được để trống.
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-else-if="passwordValidity === 'invalidLength'">Nhập password có tối thiểu 6 ký tự.
+            <div v-else-if="passwordValidity === 'invalidLength'"
+                 class="col-sm-4 invalid-feedback">Nhập password có tối thiểu 6 ký tự.
             </div>
           </div>
         </div>
@@ -83,13 +83,13 @@
               <label class="control-label" for="confirm_password">Nhập lại mật khẩu:</label>
             </div>
             <div class="col-sm-4">
-              <input class="form-control" id="confirm_password" type="password" v-model="confirmPassword"/>
+              <input id="confirm_password" v-model="confirmPassword" class="form-control" type="password"/>
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-if="confirmPasswordValidity === 'invalid'">Không được để trống.
+            <div v-if="confirmPasswordValidity === 'invalid'"
+                 class="col-sm-4 invalid-feedback">Không được để trống.
             </div>
-            <div class="col-sm-4 invalid-feedback"
-                 v-else-if="confirmPasswordValidity === 'notMatch'">Mật khẩu không khớp.
+            <div v-else-if="confirmPasswordValidity === 'notMatch'"
+                 class="col-sm-4 invalid-feedback">Mật khẩu không khớp.
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@
             <div class="col-sm-3">
             </div>
             <div class="col-sm-4">
-              <button class="btn btn-primary" :disabled="!formValidity">Đăng ký</button>
+              <button :disabled="!formValidity" class="btn btn-primary">Đăng ký</button>
             </div>
           </div>
         </div>
@@ -108,7 +108,8 @@
 </template>
 
 <script>
-import {mapState} from  'vuex'
+import {mapState} from 'vuex'
+
 export default {
   data() {
     return {
@@ -143,7 +144,7 @@ export default {
       if (this.checkValidity(this.password) === 'invalid') {
         return 'invalid';
       }
-      if (this.password.length < 6 ) {
+      if (this.password.length < 6) {
         return 'invalidLength'
       }
       return 'valid'
@@ -180,7 +181,7 @@ export default {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
-    signup(){
+    signup() {
       const formData = {
         fullName: this.fullName,
         email: this.email,
@@ -199,6 +200,7 @@ form {
   padding-left: 30px;
   /*padding-top: 30px;*/
 }
+
 .form-group.required,
 .control-label:after {
   content: "*";

@@ -11,9 +11,9 @@
       </router-link>
     </div>
     <div class="product_paging">
-      <button class="paging_pre" :disabled="!enablePrePage" @click="prePage"><i class="fa fa-angle-double-left"></i>
+      <button :disabled="!enablePrePage" class="paging_pre" @click="prePage"><i class="fa fa-angle-double-left"></i>
       </button>
-      <button class="paging_next" :disabled="!enableNextPage" @click="nextPage"><i class="fa fa-angle-double-right"></i>
+      <button :disabled="!enableNextPage" class="paging_next" @click="nextPage"><i class="fa fa-angle-double-right"></i>
       </button>
       <span>{{ currentPage }} / {{ products.length / pageSize }}</span>
     </div>
@@ -45,7 +45,7 @@ export default {
     }
   },
   computed: {
-    products(){
+    products() {
       return this.$store.getters['product/getProductsByCategoryId'](this.id)
     },
     productsShow() {

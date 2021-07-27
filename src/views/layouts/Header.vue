@@ -6,24 +6,24 @@
         0123-456-789
       </span>
       <div class="user_info">
-        <router-link v-if="!auth" :to="{name: 'signup'}" > Đăng ký |</router-link>
-        <router-link v-if="!auth" :to="{name: 'login'}" > Đăng nhập |</router-link>
+        <router-link v-if="!auth" :to="{name: 'signup'}"> Đăng ký |</router-link>
+        <router-link v-if="!auth" :to="{name: 'login'}"> Đăng nhập |</router-link>
         <div v-if="auth">
-          {{user ? user.fullName : ""}} &nbsp;&nbsp;
-          <a @click="logoutAcc" > Đăng xuất</a>
+          {{ user ? user.fullName : "" }} &nbsp;&nbsp;
+          <a @click="logoutAcc"> Đăng xuất</a>
         </div>
       </div>
     </div>
     <div class="header_main">
       <div id="header_logo">
         <router-link :to="{name: 'Dashboard'}">
-          <img class="logo_img" src="/images/logo_2.png" />
+          <img class="logo_img" src="/images/logo_2.png" alt="Tuli-Trees"/>
         </router-link>
       </div>
       <div id="search_block">
         <form class="search_box">
-          <input type="text" placeholder="Tìm kiếm">
-          <button type="submit" class="btn btn-default button-search"><i class="fa fa-search"></i></button>
+          <input placeholder="Tìm kiếm" type="text">
+          <button class="btn btn-default button-search" type="submit"><i class="fa fa-search"></i></button>
         </form>
       </div>
       <div id="shopping_cart">
@@ -39,7 +39,8 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
+
 export default {
   computed: {
     ...mapGetters('cart', {
@@ -54,7 +55,7 @@ export default {
     ...mapActions('auth', {
       logout: 'logout'
     }),
-    logoutAcc(){
+    logoutAcc() {
       this.logout()
       this.$store.commit('cart/emptyCart')
     }
@@ -85,15 +86,15 @@ export default {
   float: right;
   margin-right: 20px;
 }
+
 .user_info a,
-.user_info button
-{
+.user_info button {
   cursor: pointer;
   color: gray;
 }
 
 .user_info a:hover,
-.user_info button:hover{
+.user_info button:hover {
   color: #aad299;
   text-decoration: none;
 }
@@ -123,10 +124,12 @@ export default {
   float: left;
 
 }
+
 .search_box {
   padding-top: 15px;
 }
-input{
+
+input {
   width: 60%;
   height: 45px;
   padding: 6px;
@@ -134,6 +137,7 @@ input{
   font-size: 17px;
   border: none;
 }
+
 button {
   height: 45px;
   margin-left: -43px;
@@ -141,6 +145,7 @@ button {
   font-size: 17px;
   cursor: pointer;
 }
+
 #shopping_cart {
   width: 20%;
   height: 100%;
@@ -152,7 +157,8 @@ button {
   width: 20%;
   height: 40%;
 }
-.icon_shopping_cart{
+
+.icon_shopping_cart {
   padding-top: 20px;
 }
 

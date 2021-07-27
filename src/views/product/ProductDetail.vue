@@ -1,11 +1,17 @@
 <template>
   <base-dialog v-if="isOpenNotify" title="Thông báo">
     <template #default>
-      <h4>Bạn phải <router-link :to="{name: 'login'}">Đăng nhập</router-link> trước.</h4>
-      <h4>Hoặc <router-link :to="{name: 'signup'}">Đăng ký</router-link> tài khoản mới.</h4>
+      <h4>Bạn 
+        <router-link :to="{name: 'login'}">Đăng nhập</router-link>
+        trước khi thêm sản phẩm vào giỏ hàng.
+      </h4>
+      <h4>Hoặc
+        <router-link :to="{name: 'signup'}">Đăng ký</router-link>
+        tài khoản mới.
+      </h4>
     </template>
     <template #actions>
-      <button type="button" class="btn btn-primary" @click="closeNotify">OK</button>
+      <button class="btn btn-primary" type="button" @click="closeNotify">OK</button>
     </template>
   </base-dialog>
 
@@ -16,7 +22,7 @@
         <div class="pb-left-column col-xs-12 col-sm-4 col-md-5">
           <div class="image-block">
             <img
-                :src="imgUrl">
+                :alt="product.name" :src="imgUrl">
           </div>
         </div>
         <div class="pb-center-column col-xs-12 col-sm-4">
@@ -52,6 +58,7 @@
 <script>
 import {mapActions, mapGetters} from 'vuex'
 import BaseDialog from '@/components/UI/BaseDialog';
+
 export default {
   components: {
     BaseDialog
@@ -91,10 +98,9 @@ export default {
       addProductToCart: 'addProductToCart'
     }),
     addToCart(product) {
-      if(!this.auth){
+      if (!this.auth) {
         this.isOpenNotify = true
-      }
-      else{
+      } else {
         this.addProductToCart(product)
       }
     },
