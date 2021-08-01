@@ -15,7 +15,7 @@
       </button>
       <button :disabled="!enableNextPage" class="paging_next" @click="nextPage"><i class="fa fa-angle-double-right"></i>
       </button>
-      <span>{{ currentPage }} / {{ products.length / pageSize }}</span>
+      <span>{{ currentPage }} / {{ Math.ceil(products.length / pageSize) }}</span>
     </div>
   </div>
 </template>
@@ -45,8 +45,16 @@ export default {
     }
   },
   computed: {
+    searchKey() {
+      this.resetCurrentPage();
+      return this.$route.query.searchKey
+    },
     products() {
-      return this.$store.getters['product/getProductsByCategoryId'](this.id)
+      if (this.searchKey) {
+        return this.$store.getters['product/searchProducts'](this.searchKey)
+      } else {
+        return this.$store.getters['product/getProductsByCategoryId'](this.id)
+      }
     },
     productsShow() {
       return this.products.filter((row, index) => {

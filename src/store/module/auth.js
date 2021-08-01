@@ -1,6 +1,8 @@
 import axios from 'axios';
 import router from '@/router';
 
+import utils from '@/utils/utils.js';
+
 export default {
     namespaced: true,
     state: {
@@ -18,7 +20,13 @@ export default {
         },
         idToken(state) {
             return state.idToken;
-        }
+        },
+        isAdmin(state) {
+            if (state.user){
+                return state.user.role === "admin"
+            }
+            return null
+        },
     },
     mutations: {
         authUser(state, userData) {
@@ -56,11 +64,11 @@ export default {
                 })
 
                 // dispatch('sendEmailVerification', res.data.idToken)
-                const expirationTime = new Date(new Date().getTime() + res.data.expiresIn * 1000).toLocaleString()
+                let  expirationTime = new Date(new Date().getTime() + res.data.expiresIn * 1000)
+                expirationTime = utils.formatDate(expirationTime)
                 localStorage.setItem('idToken', res.data.idToken)
                 localStorage.setItem('userId', res.data.localId)
                 localStorage.setItem('expirationTime', expirationTime)
-                localStorage.setItem('email', authData.email)
 
                 dispatch('storeUser', authData)
                 dispatch('setLogoutTimer', res.data.expiresIn)
@@ -96,14 +104,15 @@ export default {
                     idToken: res.data.idToken,
                     userId: res.data.localId
                 }
-                const expirationTime = new Date(new Date().getTime() + res.data.expiresIn * 1000).toLocaleString()
+                let expirationTime = new Date(new Date().getTime() + res.data.expiresIn * 1000)
+                expirationTime = utils.formatDate(expirationTime)
+
                 localStorage.setItem('idToken', res.data.idToken)
                 localStorage.setItem('userId', res.data.localId)
-                localStorage.setItem('email', authData.email)
                 localStorage.setItem('expirationTime', expirationTime)
                 commit('authUser', userData)
 
-                await dispatch('fetchUser', authData.email)
+                await dispatch('fetchUser')
                 dispatch('setLogoutTimer', res.data.expiresIn)
                 commit('cart/setUserId', res.data.localId, {root: true})
                 await router.replace('/products')
@@ -123,16 +132,17 @@ export default {
                 return;
             }
             const expirationTime = localStorage.getItem('expirationTime');
-            const now = new Date();
-            if (now.toLocaleString().toString() >= expirationTime) {
+            let now = new Date()
+            now = utils.formatDate(now)
+
+            if (now >= expirationTime) {
                 return;
             }
             commit('authUser', {
                 idToken: idToken,
                 userId: expirationTime
             })
-            const email = localStorage.getItem('email');
-            dispatch('fetchUser', email)
+            dispatch('fetchUser')
 
             const userId = localStorage.getItem('userId')
             commit('cart/setUserId', userId, {root: true})
@@ -143,30 +153,37 @@ export default {
             }
             try {
                 userData.role = "user"
-                const res = await axios.post('https://tuli-trees-store-default-rtdb.firebaseio.com/user.json?auth=' + state.idToken,
+                await axios.post('https://tuli-trees-store-default-rtdb.firebaseio.com/user.json?auth=' + state.idToken,
                     userData)
-                console.log(res)
                 commit('storeUser', userData)
             } catch (error) {
                 console.log(error)
             }
 
         },
-        async fetchUser({commit, state}, email) {
+        async fetchUser({commit, state}) {
             if (!state.idToken) {
                 return
             }
             try {
-                const res = await axios.get('https://tuli-trees-store-default-rtdb.firebaseio.com/user.json?auth=' + state.idToken)
-                const data = res.data
-                for (let key in data) {
-                    const user = data[key]
-                    user.id = key
-                    // eslint-disable-next-line no-cond-assign
-                    if (user.email === email){
-                        commit('storeUser', user)
-                        break;
+                try{
+                    // get email by UserID
+                    const resUser = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAq0ridzEIGWwDHF9P6nwa2i94P-VAnBGc', {"idToken": state.idToken})
+                    const email = resUser.data.users[0].email
+
+                    const res = await axios.get('https://tuli-trees-store-default-rtdb.firebaseio.com/user.json?auth=' + state.idToken)
+                    const data = res.data
+                    for (let key in data) {
+                        const user = data[key]
+                        user.id = key
+                        // eslint-disable-next-line no-cond-assign
+                        if (user.email === email){
+                            commit('storeUser', user)
+                            break;
+                        }
                     }
+                }catch (err){
+                    console.log(err)
                 }
             } catch (error) {
                 console.log(error)
@@ -179,7 +196,6 @@ export default {
                 localStorage.removeItem('idToken')
                 localStorage.removeItem('userId')
                 localStorage.removeItem('expirationTime')
-                localStorage.removeItem('email')
             }
         },
     }

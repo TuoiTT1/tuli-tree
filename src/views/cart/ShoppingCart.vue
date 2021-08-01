@@ -4,7 +4,7 @@
       <h1 v-if="totalItemsInCart > 0">Thông tin giỏ hàng</h1>
       <h1 v-else>Giỏ hàng trống</h1>
       <hr>
-      <router-link v-if="totalItemsInCart === 0" to="/products"><h4>Chọn cây yêu thích ngay!</h4></router-link>
+      <router-link v-if="totalItemsInCart === 0" to="/products"><h4>Chọn cây yêu thích ^^</h4></router-link>
       <table v-else class="table table-bordered">
         <thead>
         <tr>
@@ -50,6 +50,8 @@
 
 <script>
 import {mapGetters} from 'vuex'
+
+import utils from '@/utils/utils.js';
 import CartItem from '@/components/cart/CartItem.vue';
 
 export default {
@@ -65,7 +67,7 @@ export default {
   },
   methods: {
     formatPrice(price) {
-      return price ? price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}) : "";
+      return utils.formatPrice(price)
     },
     decrementQty(cartItem) {
       this.$store.dispatch('cart/decrementItemQuantity', cartItem)

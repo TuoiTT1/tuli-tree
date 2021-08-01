@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import utils from '@/utils/utils.js';
 export default {
   props: {
     product: {
@@ -18,7 +19,7 @@ export default {
   },
   computed: {
     formatPrice() {
-      return  this.product.price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
+      return utils.formatPrice(this.product.price)
     }
   }
 }

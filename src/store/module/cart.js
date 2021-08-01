@@ -1,4 +1,5 @@
 import axios from 'axios';
+import utils from '@/utils/utils.js';
 
 export default {
     namespaced: true,
@@ -34,11 +35,12 @@ export default {
         setUserId(state, userId) {
             state.userId = userId
         },
-        pushProductToCart(state, productId) {
+        pushProductToCart(state, product) {
             state.items.push(
                 {
-                    id: productId,
-                    quantity: 1
+                    id: product.id,
+                    quantity: 1,
+                    price: product.price
                 }
             )
         },
@@ -76,7 +78,7 @@ export default {
                 //find cart item
                 if (!cartitem) {
                     //push product to cart
-                    commit('pushProductToCart', product.id)
+                    commit('pushProductToCart', product)
 
                     const historyItem = {
                         productId: product.id,
@@ -142,16 +144,17 @@ export default {
         async checkout({state, commit, rootGetters}) {
             //save cart to db
             try {
+                let now = new Date()
+                now = utils.formatDate(now)
                 const idToken = rootGetters['auth/idToken']
-                const res = await axios.post('https://tuli-trees-store-default-rtdb.firebaseio.com/cart.json?auth=' + idToken,
+                await axios.post('https://tuli-trees-store-default-rtdb.firebaseio.com/cart.json?auth=' + idToken,
                     {
+                        cartId: now,
                         userId: state.userId,
                         items: state.items,
                         cartHistory: state.cartHistory
                     })
-                console.log(res.data)
                 commit('emptyCart')
-                // commit('setCheckoutStatus', 'success')
             } catch (error) {
                 console.log(error)
                 commit('setCheckoutStatus', 'fail')

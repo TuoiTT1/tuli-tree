@@ -17,13 +17,17 @@
     <div class="header_main">
       <div id="header_logo">
         <router-link :to="{name: 'Dashboard'}">
-          <img class="logo_img" src="/images/logo_2.png" alt="Tuli-Trees"/>
+          <img alt="Tuli-Trees" class="logo_img" src="/images/logo_2.png"/>
         </router-link>
       </div>
       <div id="search_block">
         <form class="search_box">
-          <input placeholder="Tìm kiếm" type="text">
-          <button class="btn btn-default button-search" type="submit"><i class="fa fa-search"></i></button>
+          <input v-model="searchKey" placeholder="Tìm kiếm" type="text">
+          <router-link :to="{name: 'product_show_all', query:{searchKey: searchKey}}">
+            <button class="btn btn-default button-search">
+              <i class="fa fa-search"></i>
+            </button>
+          </router-link>
         </form>
       </div>
       <div id="shopping_cart">
@@ -34,22 +38,34 @@
           <b>({{ totalItemsInCart }})</b>
         </div>
       </div>
+      <div v-if="isAdmin" id="order_management">
+        <router-link :to="{name: 'orders'}">Orders</router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters, mapState} from 'vuex'
 
 export default {
+  data() {
+    return {
+      searchKey: ''
+    }
+  },
   computed: {
     ...mapGetters('cart', {
       totalItemsInCart: 'totalItemsInCart'
     }),
     ...mapGetters('auth', {
       auth: 'isAuthenticated',
-      user: 'user'
+      user: 'user',
+      isAdmin: 'isAdmin'
     }),
+    ...mapState('product', {
+      searchKey: (state => state.searchKey)
+    })
   },
   methods: {
     ...mapActions('auth', {
@@ -58,7 +74,7 @@ export default {
     logoutAcc() {
       this.logout()
       this.$store.commit('cart/emptyCart')
-    }
+    },
   }
 }
 </script>
@@ -119,7 +135,7 @@ export default {
 }
 
 #search_block {
-  width: 50%;
+  width: 45%;
   height: 100%;
   float: left;
 
@@ -144,6 +160,18 @@ button {
   background: #ddd;
   font-size: 17px;
   cursor: pointer;
+}
+
+#order_management {
+  width: 5%;
+  height: 100%;
+  font-size: 25px;
+  float: right;
+  padding-top: 23px;
+}
+
+#order_management a {
+  color: green;
 }
 
 #shopping_cart {

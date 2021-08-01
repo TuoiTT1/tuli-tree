@@ -46,6 +46,7 @@
   </td>
 </template>
 <script>
+import utils from '@/utils/utils.js';
 import BaseDialog from '@/components/UI/BaseDialog.vue';
 
 export default {
@@ -73,7 +74,7 @@ export default {
       return '/images/' + img
     },
     formatPrice(price) {
-      return price ? price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}) : "";
+      return utils.formatPrice(price)
     },
     incrementQty(item) {
       this.$store.dispatch('cart/incrementQty', item)

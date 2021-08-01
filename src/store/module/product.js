@@ -4,7 +4,8 @@ export default {
     namespaced: true,
     state: {
         categories: [],
-        products: []
+        products: [],
+        searchKey: ''
     },
     getters: {
         productInStock() {
@@ -37,6 +38,13 @@ export default {
                     product => product.id === id
                 )[0]
             }
+        },
+        searchProducts(state) {
+            return (keySearch) => {
+                return state.products.filter(
+                    product => product.name.toLowerCase().includes(keySearch.toLowerCase())
+                )
+            }
         }
     },
     mutations: {
@@ -52,6 +60,9 @@ export default {
         incrementProductInventory(state, {product, qty}) {
             product.inventory = product.inventory + qty;
         },
+        setSearchKey(state, searchKey){
+            state.searchKey = searchKey
+        }
     },
     actions: {
         async fetchCategories({commit}) {
@@ -73,31 +84,5 @@ export default {
             }
         },
 
-        // eslint-disable-next-line no-unused-vars
-        // async getProductsByCategoryId({state, commit}, id) {
-        //     let list = []
-        //     console.log('getProductsByCategoryId')
-        //     if (id) {
-        //         try{
-        //             const result = await axios.get(`http://localhost:3001/category/${id}`)
-        //             list = await result.data
-        //             console.log(list)
-        //             commit('setProducts', list)
-        //         }catch (error) {
-        //             console.log(error)
-        //         }
-        //     } else {
-        //         try{
-        //             const result = await axios.get(`http://localhost:3001/products`)
-        //             list = await result.data
-        //             console.log(list)
-        //             commit('setProducts', list)
-        //         }catch (error) {
-        //             console.log(error)
-        //         }
-        //     }
-        //     // commit('setProducts', list)
-        //     // return list;
-        // }
     }
 }

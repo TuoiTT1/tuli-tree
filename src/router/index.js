@@ -43,7 +43,8 @@ const routes = [
     {
         path: "/products",
         name: "product_show_all",
-        component: () => import('@/views/product/ProductList.vue')
+        query: "searchKey",
+        component: () => import('@/views/product/ProductList.vue'),
     },
     {
         path: "/:productSlug",
@@ -70,6 +71,14 @@ const routes = [
         path: '/cart',
         name: 'ShoppingCart',
         component: () => import('@/views/cart/ShoppingCart.vue'),
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+      path: '/orders',
+      name: 'orders',
+      component: () => import('@/views/cart/OrderManagement.vue'),
         meta: {
             requiresAuth: true
         }
